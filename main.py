@@ -11,11 +11,15 @@ from datetime import datetime, timedelta
 from typing import Optional
 import jwt
 import random
+import os
 
 # --- App Config ---
 SECRET_KEY = "super-secret-key-change-this-in-production"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+# --- Path Config ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Database Setup ---
 # We are using SQLite for local development. It stores the entire database in a single file ('curatemind.db').
@@ -274,8 +278,8 @@ def get_db():
 # --- API Endpoints ---
 @app.get("/")
 def serve_frontend():
-    # Serve the landing page directly at the root URL
-    return FileResponse("index.html")
+    # Serve the auth page directly at the root URL
+    return FileResponse(os.path.join(BASE_DIR, 'html', 'auth.html'))
 
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
@@ -498,4 +502,4 @@ def add_question(data: QuestionCreate, db: Session = Depends(get_db)):
 # --- Serve Static Frontend Files ---
 # Mount the directory containing your HTML/CSS/JS files so they can be accessed directly.
 # We put this at the very bottom so it acts as a catch-all and doesn't override our API routes.
-app.mount("/", StaticFiles(directory=".", html=True), name="static")
+app.mount("/html", StaticFiles(directory=os.path.join(BASE_DIR, 'html')), name="html")
