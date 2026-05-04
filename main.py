@@ -36,7 +36,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Database Setup ---
 # We are using SQLite for local development. It stores the entire database in a single file ('curatemind.db').
-SQLALCHEMY_DATABASE_URL = "sqlite:///./curatemind.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./curatemind_v2.db"
 
 # The 'engine' is the core interface to the database. 
 # 'check_same_thread': False is required for SQLite in FastAPI so multiple requests can share the same connection.
