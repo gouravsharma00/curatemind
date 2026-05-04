@@ -5,181 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile | Acurate Mind</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } }
     </script>
     <style>
         body {
             background: radial-gradient(circle at top, #1e0b3b 0%, #050505 50%, #000000 100%);
-            background-color: #000;
-            color: #ffffff;
-        }
-        .bg-grid {
-            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            background-color: #000; color: #ffffff;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col relative font-sans selection:bg-purple-500/30 selection:text-white">
-
-    <!-- Ambient Background -->
-    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<body class="min-h-screen font-sans flex flex-col items-center justify-center p-6 relative">
+    
+    <div class="fixed inset-0 z-0 pointer-events-none">
         <div class="absolute top-[10%] left-[20%] w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-[20%] right-[10%] w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px]"></div>
-        <div class="absolute inset-0 bg-grid z-0"></div>
     </div>
 
-    <!-- Navigation Bar -->
-    <header class="relative z-20 w-full border-b border-white/5 bg-black/20 backdrop-blur-md">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex-shrink-0 flex items-center">
-                <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center shadow-lg shadow-teal-500/20">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 22h4"/></svg>
-                    </span>
-                    Acurate Mind
-                </a>
-            </div>
-            <div class="flex items-center gap-4 sm:gap-6">
-                <a href="dashboard.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Dashboard</a>
-            </div>
-        </nav>
-    </header>
+    <main class="w-full max-w-md bg-[#1a1d2d]/80 backdrop-blur-xl rounded-2xl border border-white/10 p-8 relative z-10 shadow-2xl">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-2xl font-bold text-white tracking-tight">Edit Profile</h1>
+            <button onclick="window.history.back()" class="text-slate-400 hover:text-white text-sm transition-colors">Back</button>
+        </div>
 
-    <main class="relative z-10 w-full max-w-2xl mx-auto px-4 py-12 flex-1 flex flex-col justify-center">
-        <!-- Back Button -->
-        <div class="w-full mb-4">
-            <button onclick="window.history.back()" class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors cursor-pointer group focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Back
+        <!-- Avatar Preview -->
+        <div class="flex flex-col items-center mb-8">
+            <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 p-1 mb-4 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                <div class="w-full h-full bg-black rounded-full overflow-hidden border-2 border-black flex items-center justify-center">
+                    <img id="profileImagePreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Acurate" alt="Profile" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Form -->
+        <form id="profilePicForm" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Update Profile Picture</label>
+                <input type="file" id="profilePicInput" accept="image/*" required
+                    class="block w-full text-sm text-slate-400
+                    file:mr-4 file:py-2.5 file:px-4
+                    file:rounded-lg file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-cyan-500/10 file:text-cyan-400
+                    hover:file:bg-cyan-500/20 file:transition-colors cursor-pointer border border-slate-700 rounded-lg bg-black/40">
+            </div>
+
+            <button type="submit" id="uploadBtn" class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-lg px-4 py-3 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all">
+                Upload to Cloudinary
             </button>
-        </div>
-
-        <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 shadow-[0_8px_32px_rgba(0,0,0,0.5)] p-8 sm:p-10 relative overflow-hidden">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-white tracking-tight mb-2">Your Profile</h1>
-                <p class="text-sm text-slate-400">Update your interests and skill tier to refine your recommendations.</p>
-            </div>
-            
-            <form id="profile-form" class="space-y-6">
-                <div>
-                    <label for="profile-fullname" class="block text-sm font-medium text-gray-300 mb-1.5">Full Name</label>
-                    <input type="text" id="profile-fullname" name="full_name" required
-                        class="w-full bg-black/40 text-white border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all placeholder-gray-600" 
-                        placeholder="John Doe">
-                </div>
-
-                <div>
-                    <label for="profile-email" class="block text-sm font-medium text-gray-300 mb-1.5">Email Address</label>
-                    <input type="email" id="profile-email" name="email" readonly
-                        class="w-full bg-black/40 text-gray-400 border border-white/10 rounded-lg px-4 py-3 cursor-not-allowed opacity-70 outline-none" 
-                        placeholder="Loading...">
-                </div>
-
-                <div>
-                    <label for="profile-tier" class="block text-sm font-medium text-gray-300 mb-1.5">Skill Tier</label>
-                    <input type="text" id="profile-tier" name="tier" readonly disabled
-                        class="w-full bg-black/40 text-gray-400 border border-white/10 rounded-lg px-4 py-3 cursor-not-allowed opacity-70 outline-none" 
-                        placeholder="Loading...">
-                </div>
-
-                <div>
-                    <label for="profile-interests" class="block text-sm font-medium text-gray-300 mb-1.5">Interests (comma-separated)</label>
-                    <input type="text" id="profile-interests" name="interests" required
-                        class="w-full bg-black/40 text-white border border-white/10 rounded-lg px-4 py-3 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all placeholder-gray-600" 
-                        placeholder="e.g., python, machine-learning, react">
-                </div>
-
-                <div class="pt-4 flex gap-4">
-                    <a href="dashboard.html" class="w-1/3 text-center px-4 py-3.5 rounded-lg border border-slate-700 text-slate-300 font-medium hover:bg-slate-800 transition-colors">
-                        Cancel
-                    </a>
-                    <button type="submit" class="w-2/3 bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold rounded-lg px-4 py-3.5 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all">
-                        Save Changes
-                    </button>
-                </div>
-            </form>
-        </div>
+        </form>
+        
+        <!-- Status Indicator -->
+        <p id="uploadStatus" class="mt-4 text-center text-sm font-medium text-cyan-400 hidden"></p>
     </main>
 
+    <!-- Vanilla JS Logic -->
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Auth Check
-            const userId = localStorage.getItem('user_id');
-            if (!userId) {
-                window.location.href = 'auth.html';
-                return;
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('profilePicForm');
+            const input = document.getElementById('profilePicInput');
+            const status = document.getElementById('uploadStatus');
+            const preview = document.getElementById('profileImagePreview');
+            const btn = document.getElementById('uploadBtn');
 
-            // DOM Elements
-            const profileForm = document.getElementById('profile-form');
-            const fullNameInput = document.getElementById('profile-fullname');
-            const emailInput = document.getElementById('profile-email');
-            const tierInput = document.getElementById('profile-tier');
-            const interestsInput = document.getElementById('profile-interests');
-
-            // 2. Load Current Data
-            try {
-                const response = await fetch(`/user/${userId}`);
-                if (response.ok) {
-                    const userData = await response.json();
-                    if (fullNameInput) fullNameInput.value = userData.full_name || '';
-                    if (emailInput) emailInput.value = userData.email;
-                    if (tierInput) tierInput.value = userData.tier || '';
-                    if (interestsInput) interestsInput.value = userData.interests || '';
-                } else {
-                    console.error("Failed to load user profile.");
+            // 1. Instantly preview the selected image before uploading
+            input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    preview.src = URL.createObjectURL(file);
                 }
-            } catch (error) {
-                console.error("Network error fetching user data:", error);
-            }
+            });
 
-            // 3. Save Changes
-            if (profileForm) {
-                profileForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
+            // 2. Submit raw FormData to FastAPI
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const userId = localStorage.getItem('user_id');
+                if (!userId) {
+                    alert('Session expired. Please log in again.');
+                    window.location.href = 'auth.html';
+                    return;
+                }
 
-                    const updatedData = {
-                        full_name: fullNameInput.value.trim(),
-                        tier: tierInput.value,
-                        interests: interestsInput.value
-                    };
+                const file = input.files[0];
+                const formData = new FormData();
+                formData.append("file", file); // Must match the "file" argument in FastAPI
 
-                    try {
-                        const response = await fetch(`/update_profile/${userId}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(updatedData)
-                        });
+                btn.innerText = "Uploading...";
+                btn.disabled = true;
+                status.classList.remove('hidden');
+                status.innerText = "Connecting to Cloudinary...";
+                status.className = "mt-4 text-center text-sm font-medium text-slate-400";
 
-                        if (response.ok) {
-                            // 4. User Feedback
-                            alert('Profile updated successfully!');
-                            window.location.href = 'dashboard.html';
-                        } else {
-                            const errorData = await response.json();
-                            alert('Failed to update profile: ' + (errorData.detail || 'Unknown error'));
-                        }
-                    } catch (error) {
-                        alert('Network error. Make sure the backend server is running.');
-                        console.error("Error updating profile:", error);
-                    }
-                });
-            }
+                try {
+                    const response = await fetch(`/upload_profile_picture/${userId}`, { method: 'POST', body: formData });
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        status.innerText = "Successfully updated!";
+                        status.className = "mt-4 text-center text-sm font-medium text-green-400";
+                        preview.src = data.secure_url;
+                        localStorage.setItem('profile_picture_url', data.secure_url); // Useful for updating navigation bars globally
+                    } else throw new Error(data.detail || "Unknown error");
+                } catch (error) {
+                    status.innerText = "Upload failed: " + error.message;
+                    status.className = "mt-4 text-center text-sm font-medium text-red-400";
+                } finally {
+                    btn.innerText = "Upload to Cloudinary";
+                    btn.disabled = false;
+                }
+            });
         });
     </script>
 </body>

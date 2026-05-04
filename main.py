@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -12,11 +12,24 @@ from typing import Optional
 import jwt
 import random
 import os
+from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
 
 # --- App Config ---
 SECRET_KEY = "super-secret-key-change-this-in-production"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+# Load environment variables from .env
+load_dotenv()
+
+cloudinary.config(
+    cloud_name=os.getenv("defpneqxf"),
+    api_key=os.getenv("967119597615287"),
+    api_secret=os.getenv("Zx-IbAWoSyzomb6-cFUg_sRZCoA"),
+    secure=True
+)
 
 # --- Path Config ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -52,6 +65,7 @@ class User(Base):
     interests = Column(String(255), nullable=True) # Stores comma-separated tags like "python,ml,react"
     tier = Column(String(50), nullable=True)       # Stores their skill level: Beginner, Intermediate, or Advanced
     role = Column(String(50), default="student")   # Role-Based Access Control: 'student' or 'admin'
+    profile_picture_url = Column(String(500), nullable=True) # Cloudinary URL
 
 class Question(Base):
     __tablename__ = "questions"
@@ -405,6 +419,25 @@ def update_profile(user_id: int, data: ProfileUpdate, db: Session = Depends(get_
     user.tier = data.tier
     db.commit()
     return {"message": "Profile updated successfully"}
+
+@app.post("/upload_profile_picture/{user_id}")
+async def upload_profile_picture(user_id: int, file: UploadFile = File(...), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    try:
+        # Upload file directly to Cloudinary
+        result = cloudinary.uploader.upload(file.file)
+        secure_url = result.get("secure_url")
+        
+        # Save the secure URL to the database
+        user.profile_picture_url = secure_url
+        db.commit()
+        
+        return {"message": "Profile picture updated successfully", "secure_url": secure_url}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Cloudinary upload failed: {str(e)}")
 
 @app.get("/recommendations/{user_id}")
 def get_recommendations(user_id: int, db: Session = Depends(get_db)):
