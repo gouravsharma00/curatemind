@@ -278,8 +278,13 @@ def get_db():
 # --- API Endpoints ---
 @app.get("/")
 def serve_frontend():
-    # Serve the auth page directly at the root URL
-    return FileResponse(os.path.join(BASE_DIR, 'html', 'auth.html'))
+    FRONTEND_PATH = os.path.join(BASE_DIR, 'auth.html')
+    if not os.path.exists(FRONTEND_PATH):
+        return {
+            "error": f"File not found at {FRONTEND_PATH}",
+            "files_in_dir": os.listdir(BASE_DIR)
+        }
+    return FileResponse(FRONTEND_PATH)
 
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
@@ -502,4 +507,4 @@ def add_question(data: QuestionCreate, db: Session = Depends(get_db)):
 # --- Serve Static Frontend Files ---
 # Mount the directory containing your HTML/CSS/JS files so they can be accessed directly.
 # We put this at the very bottom so it acts as a catch-all and doesn't override our API routes.
-app.mount("/html", StaticFiles(directory=os.path.join(BASE_DIR, 'html')), name="html")
+app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
