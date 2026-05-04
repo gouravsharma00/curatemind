@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Curatemind</title>
+    
+    <!-- Immediate Frontend Route Protection -->
+    <script>
+        const userRole = localStorage.getItem('role');
+        if (!userRole || userRole !== 'admin') {
+            window.location.replace('dashboard.html');
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e0b3b 0%, #050505 50%, #000000 100%);
+            background-color: #000;
+            color: #ffffff;
+        }
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative font-sans selection:bg-purple-500/30 selection:text-white">
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[10%] left-[20%] w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute inset-0 bg-grid z-0"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="relative z-20 w-full border-b border-white/5 bg-black/20 backdrop-blur-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex-shrink-0 flex items-center">
+                <span class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/></svg>
+                    </span>
+                    Admin Portal
+                </span>
+            </div>
+            <div class="flex items-center gap-4 sm:gap-6">
+                <button onclick="logout()" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                    Log out
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1">
+        
+        <!-- Header Section -->
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h1 id="admin-welcome" class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-2">
+                    Welcome, <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-500">Admin</span>!
+                </h1>
+                <p class="text-gray-400 text-lg">Manage courses, monitor students, and oversee platform health.</p>
+            </div>
+        </div>
+
+        <!-- Top KPI Metrics Row -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Total Students Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.1)] flex flex-col justify-center transition-all hover:shadow-[0_0_25px_rgba(34,211,238,0.2)]">
+                <div class="flex items-center gap-2 text-gray-300 font-medium mb-2">
+                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    Total Active Students
+                </div>
+                <div class="text-4xl font-extrabold text-white">1,429</div>
+            </div>
+
+            <!-- Total Courses Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)] flex flex-col justify-center transition-all hover:shadow-[0_0_25px_rgba(168,85,247,0.2)]">
+                <div class="flex items-center gap-2 text-gray-300 font-medium mb-2">
+                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    Courses in Catalog
+                </div>
+                <div class="text-4xl font-extrabold text-white">42</div>
+            </div>
+
+            <!-- Master Bank Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.1)] flex flex-col justify-center transition-all hover:shadow-[0_0_25px_rgba(249,115,22,0.2)]">
+                <div class="flex items-center gap-2 text-gray-300 font-medium mb-2">
+                    <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Questions in Master Bank
+                </div>
+                <div class="text-4xl font-extrabold text-white">356</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Course Management Section -->
+            <div class="lg:col-span-2 bg-[#1a1d2d]/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-700/50 shadow-lg">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Course Management</h3>
+                        <p class="text-sm text-slate-400">Launch and manage adaptive curriculum tracks.</p>
+                    </div>
+                    <button id="open-course-modal" class="px-6 py-3 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all flex-shrink-0">
+                        + Create New Course
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-300 border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-700/50 text-slate-400">
+                                <th class="py-4 font-medium">Course Title</th>
+                                <th class="py-4 font-medium">Category</th>
+                                <th class="py-4 font-medium text-center">Enrolled</th>
+                                <th class="py-4 font-medium">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                                <td class="py-4 font-medium text-white">Python for Beginners</td>
+                                <td class="py-4"><span class="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2.5 py-1 rounded-full text-xs">Python</span></td>
+                                <td class="py-4 text-center">842</td>
+                                <td class="py-4"><span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span> Active</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                                <td class="py-4 font-medium text-white">Intro to Machine Learning</td>
+                                <td class="py-4"><span class="bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-full text-xs">AI/ML</span></td>
+                                <td class="py-4 text-center">451</td>
+                                <td class="py-4"><span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-500"></span> Active</span></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="py-4 font-medium text-white">Advanced React Patterns</td>
+                                <td class="py-4"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full text-xs">Web Dev</span></td>
+                                <td class="py-4 text-center">135</td>
+                                <td class="py-4"><span class="flex items-center gap-1.5 text-yellow-500"><span class="w-2 h-2 rounded-full bg-yellow-500"></span> Draft</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Assessment Control Center -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-700/50 shadow-lg flex flex-col">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-1">Baseline Assessment Control</h3>
+                    <p class="text-sm text-slate-400 mb-6">Manage the master question bank.</p>
+                </div>
+                
+                <div class="space-y-4 mb-8 flex-grow">
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-slate-700/50 bg-slate-800/30">
+                        <span class="text-slate-300 font-medium flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-cyan-400"></div> Python</span>
+                        <span id="count-python" class="text-white font-bold bg-slate-900 px-3 py-1 rounded-md border border-slate-700">145</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-slate-700/50 bg-slate-800/30">
+                        <span class="text-slate-300 font-medium flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-blue-400"></div> React</span>
+                        <span id="count-react" class="text-white font-bold bg-slate-900 px-3 py-1 rounded-md border border-slate-700">89</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-slate-700/50 bg-slate-800/30">
+                        <span class="text-slate-300 font-medium flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-orange-400"></div> SQL</span>
+                        <span id="count-sql" class="text-white font-bold bg-slate-900 px-3 py-1 rounded-md border border-slate-700">76</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-slate-700/50 bg-slate-800/30">
+                        <span class="text-slate-300 font-medium flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-purple-400"></div> ML</span>
+                        <span id="count-ml" class="text-white font-bold bg-slate-900 px-3 py-1 rounded-md border border-slate-700">46</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 rounded-lg border border-slate-700/50 bg-slate-800/30">
+                        <span class="text-slate-300 font-medium flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-pink-400"></div> Deep Learning</span>
+                        <span id="count-deep-learning" class="text-white font-bold bg-slate-900 px-3 py-1 rounded-md border border-slate-700">28</span>
+                    </div>
+                </div>
+                
+                <button id="open-question-modal" class="w-full px-6 py-3 rounded-lg border border-slate-600 bg-slate-800/50 text-white font-semibold hover:bg-slate-700 hover:border-slate-500 transition-all flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg> Add Question to Bank
+                </button>
+            </div>
+        </div>
+
+        <!-- Meet The Mentors Section -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-white tracking-tight mb-6">Meet The Mentors</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Mentor 1 -->
+                <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] transition-all duration-300">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 p-1 mb-4 shadow-[0_0_15px_rgba(34,211,238,0.4)]">
+                        <div class="w-full h-full bg-[#050505] rounded-full overflow-hidden border-2 border-[#1a1d2d]">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alan" alt="Mentor" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <h3 class="text-white font-bold">Dr. Alan Turing</h3>
+                    <p class="text-cyan-400 text-sm mb-4 font-medium">AI Architect</p>
+                    <button class="text-xs font-semibold text-cyan-400 hover:text-white hover:bg-cyan-500/20 border border-cyan-500/50 rounded-full px-5 py-2 transition-colors">Connect</button>
+                </div>
+                <!-- Mentor 2 -->
+                <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-300">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-purple-400 to-pink-500 p-1 mb-4 shadow-[0_0_15px_rgba(217,70,239,0.4)]">
+                        <div class="w-full h-full bg-[#050505] rounded-full overflow-hidden border-2 border-[#1a1d2d]">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Mentor" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <h3 class="text-white font-bold">Sarah Connor</h3>
+                    <p class="text-purple-400 text-sm mb-4 font-medium">Data Scientist</p>
+                    <button class="text-xs font-semibold text-purple-400 hover:text-white hover:bg-purple-500/20 border border-purple-500/50 rounded-full px-5 py-2 transition-colors">Connect</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+    <!-- Create Course Modal (Hidden) -->
+    <div id="course-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h2 class="text-2xl font-bold text-white">Create New Course</h2>
+                <button id="close-course-modal" class="text-slate-400 hover:text-white transition-colors focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <form id="create-course-form" class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Course Title</label>
+                    <input type="text" id="course-title" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-orange-500 outline-none transition-all placeholder-slate-600" placeholder="e.g., Python Data Structures">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Course Description</label>
+                    <textarea id="course-description" required rows="3" class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-orange-500 outline-none transition-all placeholder-slate-600" placeholder="Briefly describe what students will learn..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">Category</label>
+                        <select id="course-category" class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-orange-500 outline-none transition-all appearance-none">
+                            <option value="python">Python</option><option value="react">React</option><option value="ml">Machine Learning</option><option value="sql">SQL / Data</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5">Difficulty Tier</label>
+                        <select id="course-tier" class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-orange-500 outline-none transition-all appearance-none">
+                            <option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full mt-4 px-4 py-3 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all">Launch Course</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Question Modal (Hidden) -->
+    <div id="question-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden my-8">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h2 class="text-2xl font-bold text-white">Add Question to Bank</h2>
+                <button id="close-question-modal" class="text-slate-400 hover:text-white transition-colors focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <form id="create-question-form" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Topic Category</label>
+                    <select id="question-topic" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-cyan-500 outline-none transition-all appearance-none">
+                        <option value="python">Python</option><option value="react">React</option><option value="sql">SQL</option><option value="ml">Machine Learning</option><option value="deep-learning">Deep Learning</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Question Text</label>
+                    <textarea id="question-text-input" required rows="2" class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-cyan-500 outline-none transition-all placeholder-slate-600" placeholder="Type the assessment question here..."></textarea>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-xs font-medium text-slate-400 mb-1">Option A</label><input type="text" id="question-opt-a" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 outline-none"></div>
+                    <div><label class="block text-xs font-medium text-slate-400 mb-1">Option B</label><input type="text" id="question-opt-b" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 outline-none"></div>
+                    <div><label class="block text-xs font-medium text-slate-400 mb-1">Option C</label><input type="text" id="question-opt-c" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 outline-none"></div>
+                    <div><label class="block text-xs font-medium text-slate-400 mb-1">Option D</label><input type="text" id="question-opt-d" required class="w-full bg-black/40 text-white border border-slate-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-500 outline-none"></div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5">Correct Answer</label>
+                    <select id="question-correct" required class="w-full bg-slate-800 text-white border border-slate-600 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-cyan-500 outline-none transition-all appearance-none">
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
+                    </select>
+                    <p class="text-xs text-slate-500 mt-1.5">The exact string value of this option will be recorded as the correct answer in the database.</p>
+                </div>
+                
+                <div class="pt-4 flex gap-4">
+                    <button type="button" id="cancel-question-btn" class="w-1/3 text-center px-4 py-3 rounded-lg border border-slate-600 text-slate-300 font-medium hover:bg-slate-800 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="w-2/3 px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all">
+                        Save Question
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'auth.html';
+        }
+        
+        // Fetch user data and personalize admin dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('user_id');
+            if (!userId) return;
+            
+            // Personalize Dashboard Greeting
+            try {
+                const response = await fetch(`/user/${userId}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    const fullName = userData.full_name || 'Admin';
+                    
+                    const welcomeText = document.getElementById('admin-welcome');
+                    if (welcomeText) {
+                        welcomeText.innerHTML = `Welcome, <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-500">${fullName}</span>!`;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch user profile:', error);
+            }
+            
+            // Modal Logic
+            const courseModal = document.getElementById('course-modal');
+            document.getElementById('open-course-modal').addEventListener('click', () => courseModal.classList.remove('hidden'));
+            document.getElementById('close-course-modal').addEventListener('click', () => courseModal.classList.add('hidden'));
+            
+            // Handle Dummy Course Creation
+            document.getElementById('create-course-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const title = document.getElementById('course-title').value;
+                const desc = document.getElementById('course-description').value;
+                
+                try {
+                    const res = await fetch('/create_course', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: parseInt(userId), title: title, description: desc })
+                    });
+                    
+                    if(res.ok) {
+                        const data = await res.json();
+                        alert("Success: " + data.message);
+                        courseModal.classList.add('hidden');
+                        e.target.reset();
+                    } else {
+                        alert('Failed to launch course. Please check permissions.');
+                    }
+                } catch(err) {
+                    alert('Network error. Check backend server.');
+                }
+            });
+
+            // --- Assessment Bank Question Logic ---
+            
+            // Modal Logic
+            const questionModal = document.getElementById('question-modal');
+            document.getElementById('open-question-modal').addEventListener('click', () => questionModal.classList.remove('hidden'));
+            document.getElementById('close-question-modal').addEventListener('click', () => questionModal.classList.add('hidden'));
+            document.getElementById('cancel-question-btn').addEventListener('click', () => questionModal.classList.add('hidden'));
+            
+            // Fetch Dynamic Question Counts
+            async function fetchQuestionCounts() {
+                try {
+                    const res = await fetch('/admin/question_counts');
+                    if (res.ok) {
+                        const counts = await res.json();
+                        document.getElementById('count-python').innerText = counts['python'] !== undefined ? counts['python'] : 0;
+                        document.getElementById('count-react').innerText = counts['react'] !== undefined ? counts['react'] : 0;
+                        document.getElementById('count-sql').innerText = counts['sql'] !== undefined ? counts['sql'] : 0;
+                        document.getElementById('count-ml').innerText = counts['ml'] !== undefined ? counts['ml'] : 0;
+                        document.getElementById('count-deep-learning').innerText = counts['deep-learning'] !== undefined ? counts['deep-learning'] : 0;
+                    }
+                } catch (err) {
+                    console.error('Failed to load question counts:', err);
+                }
+            }
+            
+            // Call instantly on page load
+            fetchQuestionCounts();
+            
+            // Handle Question Submission
+            document.getElementById('create-question-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const optA = document.getElementById('question-opt-a').value.trim();
+                const optB = document.getElementById('question-opt-b').value.trim();
+                const optC = document.getElementById('question-opt-c').value.trim();
+                const optD = document.getElementById('question-opt-d').value.trim();
+                
+                const correctChoice = document.getElementById('question-correct').value;
+                let correctText = "";
+                if (correctChoice === "A") correctText = optA;
+                else if (correctChoice === "B") correctText = optB;
+                else if (correctChoice === "C") correctText = optC;
+                else if (correctChoice === "D") correctText = optD;
+                
+                const payload = {
+                    topic: document.getElementById('question-topic').value,
+                    question_text: document.getElementById('question-text-input').value.trim(),
+                    option_a: optA, option_b: optB, option_c: optC, option_d: optD,
+                    correct_answer: correctText
+                };
+                
+                try {
+                    const res = await fetch('/admin/add_question', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if(res.ok) {
+                        alert("Question successfully added to the master bank!");
+                        questionModal.classList.add('hidden');
+                        e.target.reset();
+                        fetchQuestionCounts(); // Instantly refresh the UI counts
+                    } else {
+                        const errorData = await res.json();
+                        alert("Failed to add question: " + (errorData.detail || "Unknown error."));
+                    }
+                } catch(err) {
+                    alert('Network error. Is the backend running?');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseline Assessment | Curatemind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020617; /* bg-slate-950 equivalent */
+        }
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 flex flex-col relative font-sans text-slate-200 selection:bg-purple-500/30">
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[10%] left-[20%] w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[20%] right-[10%] w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute inset-0 bg-grid z-0"></div>
+    </div>
+
+    <!-- Standard Navigation Bar -->
+    <header class="relative z-20 w-full border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex-shrink-0 flex items-center">
+                <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 22h4"/></svg>
+                    </span>
+                    Curatemind
+                </a>
+            </div>
+            <div class="hidden md:flex flex-1 justify-center gap-8">
+                <a href="catalog.html" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Courses</a>
+            </div>
+            <div class="flex items-center gap-4 sm:gap-6">
+                <button onclick="logoutUser()" class="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2">
+                    Log out
+                </button>
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 p-0.5 cursor-pointer">
+                    <div class="w-full h-full bg-[#050505] rounded-full flex items-center justify-center text-sm font-bold">A1</div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Back Button Container -->
+    <div class="relative z-20 max-w-6xl mx-auto w-full px-6 pt-6 mb-2">
+        <button onclick="window.history.back()" class="flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer focus:outline-none bg-transparent border-none p-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <!-- Main Assessment Area -->
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-8">
+        
+        <!-- Glassmorphic Card -->
+        <div class="w-full max-w-2xl bg-slate-900 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-slate-800 p-8 sm:p-10 flex flex-col transition-all duration-500 min-h-[400px]">
+            
+            <!-- 1. Topic Selection View -->
+            <div id="topic-selection-view" class="flex flex-col h-full flex-grow text-center justify-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Choose Your Assessment</h2>
+                <p class="text-slate-400 mb-8">Select a topic to generate your baseline skill check.</p>
+                
+                <div id="dynamic-topic-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamically generated topic buttons will appear here -->
+                    <p class="text-slate-400 col-span-2 text-center">Loading your personalized topics...</p>
+                </div>
+            </div>
+
+            <!-- 2. Quiz View (Hidden initially) -->
+            <div id="quiz-view" class="hidden flex-col h-full flex-grow">
+                <div class="mb-6 flex justify-between items-center">
+                    <h2 class="text-sm font-semibold text-slate-400 tracking-wide uppercase">Skill Assessment</h2>
+                    <span id="quiz-topic-label" class="text-sm font-medium text-cyan-400 capitalize">Topic</span>
+                </div>
+                
+                <form id="quiz-form" class="flex-grow flex flex-col">
+                    <div id="quiz-questions-container" class="space-y-8 flex-grow">
+                        <!-- Dynamically injected questions -->
+                    </div>
+                    
+                    <div class="mt-10 pt-6 border-t border-slate-800 flex justify-end">
+                        <button type="submit" class="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">
+                            Submit Quiz
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let quizData = [];
+        function logoutUser() {
+            localStorage.clear();
+            window.location.href = 'auth.html';
+        }
+
+        let currentTopic = "";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('user_id');
+            if (!userId) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            const dynamicContainer = document.getElementById('dynamic-topic-buttons');
+            
+            try {
+                // Fetch the user's saved interests
+                const response = await fetch(`/user/${userId}`);
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    if (userData.interests) {
+                        const interestsArray = userData.interests.split(',');
+                        dynamicContainer.innerHTML = ''; // Clear the loading text
+                        
+                        interestsArray.forEach(interest => {
+                            const topic = interest.trim();
+                            
+                            // Create button element dynamically
+                            const btn = document.createElement('button');
+                            btn.className = "p-6 rounded-xl border border-slate-700 bg-slate-800/50 hover:border-cyan-500 hover:bg-slate-800 transition-colors group flex flex-col items-center justify-center gap-3";
+                            btn.onclick = () => startQuiz(topic);
+                            
+                            // Simple emoji mapper based on topic string
+                            let emoji = "📚";
+                            if (topic.toLowerCase().includes("python")) emoji = "🐍";
+                            else if (topic.toLowerCase().includes("react")) emoji = "⚛️";
+                            else if (topic.toLowerCase().includes("sql") || topic.toLowerCase().includes("data")) emoji = "📊";
+                            else if (topic.toLowerCase().includes("ml") || topic.toLowerCase().includes("deep")) emoji = "🤖";
+
+                            btn.innerHTML = `
+                                <div class="w-12 h-12 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl">${emoji}</div>
+                                <span class="text-lg font-bold text-white capitalize">Focus on ${topic}</span>
+                            `;
+                            
+                            dynamicContainer.appendChild(btn);
+                        });
+                    } else {
+                        dynamicContainer.innerHTML = '<p class="text-slate-400 col-span-2 text-center">No interests found. Please update your profile.</p>';
+                    }
+                }
+            } catch (err) {
+                console.error("Error fetching user data:", err);
+                dynamicContainer.innerHTML = '<p class="text-red-400 col-span-2 text-center">Failed to load topics.</p>';
+            }
+        });
+
+        async function startQuiz(topic) {
+            currentTopic = topic;
+            document.getElementById('topic-selection-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+            document.getElementById('quiz-view').classList.add('flex');
+            document.getElementById('quiz-topic-label').innerText = topic;
+            
+            try {
+                const response = await fetch(`/assessment/${topic}`);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    alert(errorData.detail || 'Questions coming soon!');
+                    // Reset UI back to selection
+                    document.getElementById('topic-selection-view').classList.remove('hidden');
+                    document.getElementById('quiz-view').classList.add('hidden');
+                    document.getElementById('quiz-view').classList.remove('flex');
+                    return;
+                }
+
+                const questions = await response.json();
+                renderQuestions(questions);
+            } catch (err) {
+                alert('Failed to load questions. Check your backend.');
+            }
+        }
+
+        function renderQuestions(questions) {
+            quizData = questions;
+            const container = document.getElementById('quiz-questions-container');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                let optionsHTML = q.options.map((opt, i) => `
+                    <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-700 bg-slate-800/30 cursor-pointer hover:border-cyan-500 transition-colors">
+                        <input type="radio" name="q_${q.id}" value="${i}" required class="text-cyan-500 bg-slate-900 border-slate-600 focus:ring-cyan-500">
+                        <span class="text-slate-300 text-sm">${opt}</span>
+                    </label>
+                `).join('');
+                
+                questionDiv.innerHTML = `
+                    <h3 class="text-xl font-bold text-white mb-3">${index + 1}. ${q.question}</h3>
+                    <div class="space-y-2">
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        document.getElementById('quiz-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userId = localStorage.getItem('user_id');
+            if (!userId) {
+                alert('User not found. Please log in.');
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            // Gather all selected answers and score them on the frontend
+            const formData = new FormData(e.target);
+            let score = 0;
+            let total_questions = quizData.length;
+            
+            quizData.forEach(q => {
+                const selectedIndex = parseInt(formData.get(`q_${q.id}`));
+                const selectedAnswer = q.options[selectedIndex];
+                if (selectedAnswer === q.correct_answer) {
+                    score++;
+                }
+            });
+
+            const payload = {
+                score: score,
+                total_questions: total_questions
+            };
+            
+            try {
+                const response = await fetch(`/submit_assessment/${userId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(`You scored ${score}/${total_questions} (${Math.round(data.percentage)}%)! You have been placed in the ${data.tier} tier.`);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const errorData = await response.json();
+                    alert('Error submitting quiz: ' + errorData.detail);
+                }
+            } catch (err) {
+                alert('Network error. Check backend server.');
+            }
+        });
+    </script>
+</body>
+</html>
