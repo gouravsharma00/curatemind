@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acurate Mind | Adaptive Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 10s infinite ease-in-out',
+                        'float-delayed': 'float 12s infinite ease-in-out 2s',
+                        'float-slow': 'float 15s infinite ease-in-out 4s',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                            '50%': { transform: 'translateY(-20px) scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base styling for the dark/purple background gradient */
+        body {
+            background: radial-gradient(circle at top, #1e0b3b 0%, #050505 50%, #000000 100%);
+            background-color: #000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Subtle mesh/particle line overlay for the ML vibe */
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative font-sans selection:bg-purple-500/30 selection:text-white">
+
+    <!-- Animated Background Nodes/Particles -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[10%] left-[20%] w-64 h-64 bg-purple-600/20 rounded-full blur-[80px] animate-float"></div>
+        <div class="absolute top-[40%] right-[15%] w-72 h-72 bg-blue-600/15 rounded-full blur-[100px] animate-float-delayed"></div>
+        <div class="absolute -bottom-[10%] left-[40%] w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] animate-float-slow"></div>
+        <div class="absolute inset-0 bg-grid z-0"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="relative z-20 w-full border-b border-white/5 bg-black/20 backdrop-blur-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex-shrink-0 flex items-center">
+                <a href="#" class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 22h4"/></svg>
+                    </span>
+                    Acurate Mind
+                </a>
+            </div>
+
+            <!-- Center Links -->
+            <div class="hidden md:flex flex-1 justify-center">
+                <a href="#" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Courses</a>
+            </div>
+
+            <!-- Right CTAs -->
+            <div class="flex items-center gap-4 sm:gap-6">
+                <a href="auth.html" class="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Sign in</a>
+                <a href="auth.html" class="text-sm font-semibold text-white bg-gradient-to-r from-teal-400 to-blue-500 px-5 py-2.5 rounded-lg hover:shadow-[0_0_15px_rgba(45,212,191,0.5)] hover:scale-105 transition-all duration-300 ease-out">
+                    Get started
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main class="relative z-10 flex-1 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 pt-20 pb-24 text-center">
+        
+        <!-- Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-300 text-sm font-medium mb-8 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.4)] animate-fade-in-up">
+            <span>✨</span>
+            Adaptive learning, powered by ML
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="max-w-4xl text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6 drop-shadow-lg">
+            Learn at the pace of <br class="hidden sm:block" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-600">
+                your own brain
+            </span>
+        </h1>
+
+        <!-- Sub-text -->
+        <p class="max-w-2xl text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed drop-shadow-md">
+            Acurate Mind builds a personal curriculum for every student — adaptive paths, instant tutoring, and real-time mastery analytics for instructors.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <!-- Primary CTA -->
+            <a href="auth.html" class="w-full sm:w-auto px-8 py-3.5 rounded-lg text-white font-semibold bg-gradient-to-r from-cyan-400 to-purple-600 hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2">
+                Start learning free
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </a>
+            
+            <!-- Secondary CTA -->
+            <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-lg text-white font-semibold border border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center">
+                Browse courses
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-32">
+        
+        <!-- Section Header -->
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-5 tracking-tight">
+                Built for the next decade of learning
+            </h2>
+            <p class="text-lg text-gray-400 leading-relaxed">
+                Every feature is designed around one belief: education should bend to the student, not the other way around.
+            </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Card 1 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-400" aria-hidden="true"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Adaptive Learning Paths</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Our AI rewires your roadmap in real time when you struggle, inserting prerequisite modules so you never feel lost.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-400" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Personalized Recommendations</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Collaborative filtering matches you with the courses similar high-performers loved.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-400" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Predictive Analytics</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Early-warning models flag at-risk students before exam week — helping instructors intervene with complete confidence.
+                </p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">AI Tutor, 24/7</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Ask anything about your course content and get grounded, contextual answers in seconds.
+                </p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Skill Mastery Matrix</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    A live heatmap of your CSE journey — see exactly what you've mastered and what's next.
+                </p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Smart Summarization</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Long lectures collapse into crisp summaries plus auto-generated practice questions.
+                </p>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Skill Gamification & Badges</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Earn verified digital badges and climb leaderboards as you master critical CSE skills and milestones.
+                </p>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Peer Learning Networks</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Find and connect with peers based on complementary skills and mutual learning goals for collaborative study groups.
+                </p>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="bg-[#1a1d2d] rounded-xl border border-slate-700/50 p-6 hover:border-purple-500/50 transition-colors duration-300">
+                <div class="bg-[#23273b] p-3 rounded-lg w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-purple-500" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="1"/><path d="M5 12s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-white mt-4 mb-2">Content & Exam Proctoring</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Advanced ML-driven visual and environmental analysis ensures assessment integrity and secure testing conditions.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Who It's For Section -->
+    <section id="who-its-for" class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Card 1 -->
+            <div class="bg-[#1a1d2d] rounded-xl p-10 border border-slate-700/50 hover:border-teal-500/50 hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] hover:-translate-y-1 transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-teal-400 mb-6"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <h3 class="text-2xl font-bold text-white mb-3">For Students</h3>
+                <p class="text-slate-400 leading-relaxed">
+                    Personalized paths, AI tutor, gamified streaks.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-[#1a1d2d] rounded-xl p-10 border border-slate-700/50 hover:border-teal-500/50 hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] hover:-translate-y-1 transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-teal-400 mb-6"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/></svg>
+                <h3 class="text-2xl font-bold text-white mb-3">For Instructors</h3>
+                <p class="text-slate-400 leading-relaxed">
+                    Course studio, auto-grading, performance analytics.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-[#1a1d2d] rounded-xl p-10 border border-slate-700/50 hover:border-teal-500/50 hover:shadow-[0_0_20px_rgba(45,212,191,0.15)] hover:-translate-y-1 transition-all duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-teal-400 mb-6"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                <h3 class="text-2xl font-bold text-white mb-3">For Admins</h3>
+                <p class="text-slate-400 leading-relaxed">
+                    User management, system health, platform-wide insights.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="bg-gradient-to-br from-purple-900/60 to-blue-900/60 border border-white/10 rounded-2xl p-10 md:p-16 text-center shadow-2xl relative overflow-hidden backdrop-blur-md">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">Your most adaptive classroom is waiting</h2>
+            <p class="text-base md:text-lg text-slate-300 mb-10 max-w-2xl mx-auto">Join LearnSphere and let the platform shape itself around the way you think.</p>
+            <a href="auth.html" class="inline-block px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-sky-400 to-purple-500 rounded-xl hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] hover:-translate-y-1 transition-all duration-300">
+                Create your free account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="relative z-10 w-full border-t border-white/10 bg-[#050505] py-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-slate-400 text-sm text-center md:text-left">© 2026 LearnSphere. Adaptive learning, reimagined.</p>
+            <p class="text-slate-400 text-sm text-center md:text-right">Built with intent.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

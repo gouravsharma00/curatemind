@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Acurate Mind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at top, #1e0b3b 0%, #050505 50%, #000000 100%);
+            background-color: #000;
+            color: #ffffff;
+        }
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative font-sans selection:bg-purple-500/30 selection:text-white">
+
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 right-[20%] w-96 h-96 bg-purple-600/10 rounded-full blur-[100px]"></div>
+        <div class="absolute inset-0 bg-grid z-0"></div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="relative z-20 w-full border-b border-white/5 bg-black/20 backdrop-blur-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex-shrink-0 flex items-center">
+                <a href="index.html" class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 22h4"/></svg>
+                    </span>
+                    Acurate Mind
+                </a>
+            </div>
+            <div class="hidden md:flex flex-1 justify-center gap-8">
+                <a href="dashboard.html" class="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500 drop-shadow-sm">Dashboard</a>
+                <a href="catalog.html" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Courses</a>
+            </div>
+            <div class="flex items-center gap-4 sm:gap-6">
+                <button onclick="logoutUser()" id="logout-btn" class="text-sm font-medium text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                    Log out
+                </button>
+                <a href="profile.html" style="text-decoration: none;" class="w-10 h-10 block rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-0.5 cursor-pointer hover:shadow-lg hover:shadow-purple-500/20 transition-all">
+                    <div class="w-full h-full bg-[#050505] rounded-full flex items-center justify-center text-sm font-bold text-white">A1</div>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1">
+        
+        <!-- Header Section -->
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h1 id="welcome-text" class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-2">
+                    Welcome back, <span id="user-greeting" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Student</span>!
+                </h1>
+                <p class="text-gray-400 text-lg">Pick up right where you left off.</p>
+            </div>
+        </div>
+
+        <!-- Stats Overview (Grid Layout) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            
+            <!-- Personal Progress Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 shadow-lg flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2 text-gray-300 font-medium">
+                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Personal Progress
+                    </div>
+                    <span id="progress-text" class="text-2xl font-bold text-white">68%</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-gradient-to-r from-cyan-400 to-purple-500 h-2.5 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.6)]" style="width: 68%"></div>
+                </div>
+            </div>
+
+            <!-- Total Active Courses Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 shadow-lg flex flex-col justify-center">
+                <div class="flex items-center gap-2 text-gray-300 font-medium mb-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    Total active courses
+                </div>
+                <div id="active-courses-text" class="text-4xl font-extrabold text-white">3</div>
+            </div>
+
+            <!-- Completed Courses Widget -->
+            <div class="bg-[#1a1d2d]/80 backdrop-blur-sm p-6 rounded-2xl border border-slate-700/50 shadow-lg flex flex-col justify-center">
+                <div class="flex items-center gap-2 text-gray-300 font-medium mb-2">
+                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Completed courses
+                </div>
+                <div id="completed-courses-text" class="text-4xl font-extrabold text-white">12</div>
+            </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-white tracking-tight">Recommended for you</h2>
+        </div>
+
+        <!-- Course Cards (Grid Layout) -->
+        <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <!-- Dynamically injected recommended courses will appear here -->
+        </div>
+
+        <!-- Meet The Mentors Section -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-white tracking-tight mb-6">Meet The Mentors</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Mentor 1 -->
+                <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 transition-transform">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 p-1 mb-4">
+                        <div class="w-full h-full bg-[#050505] rounded-full overflow-hidden border-2 border-[#1a1d2d]">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Mentor" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <h3 class="text-white font-bold">Dr. Alan Turing</h3>
+                    <p class="text-cyan-400 text-sm mb-3">AI Architect</p>
+                    <button class="text-xs font-medium text-gray-300 hover:text-white border border-slate-600 rounded-full px-4 py-1.5">Connect</button>
+                </div>
+                <!-- Mentor 2 -->
+                <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 transition-transform">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-purple-400 to-pink-500 p-1 mb-4">
+                        <div class="w-full h-full bg-[#050505] rounded-full overflow-hidden border-2 border-[#1a1d2d]">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" alt="Mentor" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <h3 class="text-white font-bold">Sarah Connor</h3>
+                    <p class="text-purple-400 text-sm mb-3">Data Scientist</p>
+                    <button class="text-xs font-medium text-gray-300 hover:text-white border border-slate-600 rounded-full px-4 py-1.5">Connect</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="relative z-10 w-full border-t border-white/10 bg-[#050505] py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2 text-xl font-extrabold text-white opacity-80">
+                <span class="w-6 h-6 rounded-md bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18h6"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 22h4"/></svg>
+                </span>
+                Acurate Mind
+            </div>
+            <div class="flex gap-6 text-sm text-gray-500">
+                <a href="#" class="hover:text-cyan-400 transition-colors">Privacy</a>
+                <a href="#" class="hover:text-cyan-400 transition-colors">Terms</a>
+                <a href="#" class="hover:text-cyan-400 transition-colors">Support</a>
+            </div>
+            <p class="text-slate-600 text-sm">© 2026 Acurate Mind. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dynamic Recommendations Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            
+            // --- 1. Route Protection ---
+            const userId = localStorage.getItem('user_id');
+            if (!userId) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            
+            // --- 3. Dynamic User Profile & Stats ---
+            try {
+                const userResponse = await fetch(`/user/${userId}`);
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    // Display their real name, or fallback to Student if full name is missing
+                    const username = userData.full_name || 'Student';
+                    document.getElementById('user-greeting').textContent = username;
+                }
+            } catch (error) {
+                console.error('Failed to load user profile:', error);
+            }
+
+            // Reset Hardcoded Stats for a New User
+            document.getElementById('progress-text').textContent = '0%';
+            document.getElementById('progress-bar-fill').style.width = '0%';
+            document.getElementById('active-courses-text').textContent = '0';
+            document.getElementById('completed-courses-text').textContent = '0';
+
+            // --- 4. Dynamic Course Recommendations ---
+            const coursesGrid = document.getElementById('courses-grid');
+            coursesGrid.innerHTML = '<p class="text-slate-400 col-span-3">Generating your custom curriculum...</p>';
+
+            try {
+                const response = await fetch(`/recommendations/${userId}`);
+                if (response.ok) {
+                    const courses = await response.json();
+                    coursesGrid.innerHTML = ''; 
+                    
+                    if (courses.length === 0) {
+                        coursesGrid.innerHTML = '<p class="text-slate-400 col-span-3">No specific courses found for your exact interests, try exploring the catalog!</p>';
+                        return;
+                    }
+
+                    courses.forEach(course => {
+                        // Adjust styles dynamically safely so Tailwind can still parse them
+                        let colorClasses = {
+                            badge: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10',
+                            hover: 'hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] group-hover:text-cyan-300',
+                            bg: 'from-blue-900 to-indigo-900'
+                        };
+                        
+                        if (course.level === 'Intermediate') {
+                            colorClasses.badge = 'border-purple-500/30 text-purple-400 bg-purple-500/10';
+                            colorClasses.hover = 'hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] group-hover:text-purple-300';
+                            colorClasses.bg = 'from-purple-900 to-fuchsia-900';
+                        } else if (course.level === 'Advanced') {
+                            colorClasses.badge = 'border-fuchsia-500/30 text-fuchsia-400 bg-fuchsia-500/10';
+                            colorClasses.hover = 'hover:border-fuchsia-500/50 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] group-hover:text-fuchsia-300';
+                            colorClasses.bg = 'from-fuchsia-900 to-rose-900';
+                        }
+
+                        const cardHTML = `
+                        <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 transition-all flex flex-col h-full overflow-hidden group ${colorClasses.hover}">
+                            <div class="h-32 bg-gradient-to-br ${colorClasses.bg} relative">
+                                <div class="absolute inset-0 opacity-50 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')]"></div>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-xs font-semibold border px-2.5 py-1 rounded-full ${colorClasses.badge}">${course.level}</span>
+                                </div>
+                                <h3 class="font-bold text-xl mb-2 text-white transition-colors">${course.title}</h3>
+                                <p class="text-gray-400 text-sm mb-6 flex-grow">${course.description}</p>
+                                <button class="w-full py-2.5 rounded-lg text-sm font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition-colors">Start course</button>
+                            </div>
+                        </div>
+                        `;
+                        coursesGrid.innerHTML += cardHTML;
+                    });
+                }
+            } catch (error) {
+                coursesGrid.innerHTML = '<p class="text-red-400 col-span-3">Network error. Is the backend running?</p>';
+            }
+        });
+
+        // --- 2. Log Out Logic ---
+        function logoutUser() {
+            localStorage.clear(); // Clears user_id, access_token, and any other session data
+            window.location.href = 'auth.html';
+        }
+    </script>
+</body>
+</html>

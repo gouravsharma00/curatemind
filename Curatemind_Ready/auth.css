@@ -1,0 +1,22 @@
+/* Custom CSS for Acurate Mind Authentication */
+
+/* Custom Focus State */
+.custom-focus {
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.custom-focus:focus {
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Smooth Transition Animation for Forms */
+.fade-enter-active {
+    animation: fade-in 0.4s ease-out forwards;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
