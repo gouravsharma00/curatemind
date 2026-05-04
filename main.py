@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, Column, Integer, String, func
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -271,8 +273,9 @@ def get_db():
 
 # --- API Endpoints ---
 @app.get("/")
-def health_check():
-    return {"status": "success", "message": "Welcome to the Curatemind API"}
+def serve_frontend():
+    # Serve the landing page directly at the root URL
+    return FileResponse("index.html")
 
 @app.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
@@ -491,3 +494,8 @@ def add_question(data: QuestionCreate, db: Session = Depends(get_db)):
     db.add(new_q)
     db.commit()
     return {"message": "Question added successfully to the master bank!"}
+
+# --- Serve Static Frontend Files ---
+# Mount the directory containing your HTML/CSS/JS files so they can be accessed directly.
+# We put this at the very bottom so it acts as a catch-all and doesn't override our API routes.
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
