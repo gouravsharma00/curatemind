@@ -36,7 +36,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Database Setup ---
 # We are using SQLite for local development. It stores the entire database in a single file ('curatemind.db').
-SQLALCHEMY_DATABASE_URL = "sqlite:///./curatemind_v2.db"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./curatemind_v2.db")
 
 # The 'engine' is the core interface to the database. 
 # 'check_same_thread': False is required for SQLite in FastAPI so multiple requests can share the same connection.
@@ -161,8 +161,37 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 
 # --- FastAPI App ---
 app = FastAPI()
+@app.get("/auth.html")
+async def get_auth_page():
+    return FileResponse("auth.html")
+
+@app.get("/onboarding.html")
+async def get_onboarding_page():
+    return FileResponse("onboarding.html")
 
 # Run the seed_courses function when the server starts up
+@app.get("/assessment.html")
+async def get_assessment_page():
+    return FileResponse("assessment.html")
+
+@app.get("/dashboard.html")
+async def get_dashboard_page():
+    return FileResponse("dashboard.html")
+
+@app.get("/profile.html")
+async def get_profile_page():
+    return FileResponse("profile.html")
+
+@app.get("/catalog.html")
+async def get_catalog_page():
+    return FileResponse("catalog.html")
+@app.get("/admin_dashboard.html")
+async def get_admin_dashboard_page():
+    return FileResponse("admin_dashboard.html")
+
+@app.get("/index.html")
+async def get_index_page():
+    return FileResponse("index.html")
 @app.on_event("startup")
 def startup_event():
     seed_courses()
