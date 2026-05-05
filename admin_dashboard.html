@@ -195,7 +195,7 @@
         <!-- Meet The Mentors Section -->
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-white tracking-tight mb-6">Meet The Mentors</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Mentor 1 -->
                 <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] transition-all duration-300">
                     <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 p-1 mb-4 shadow-[0_0_15px_rgba(34,211,238,0.4)]">
@@ -205,7 +205,7 @@
                     </div>
                     <h3 class="text-white font-bold">Dr. Alan Turing</h3>
                     <p class="text-cyan-400 text-sm mb-4 font-medium">AI Architect</p>
-                    <button class="text-xs font-semibold text-cyan-400 hover:text-white hover:bg-cyan-500/20 border border-cyan-500/50 rounded-full px-5 py-2 transition-colors">Connect</button>
+                    <button class="connect-mentor-btn text-cyan-400 hover:text-white border border-gray-600 rounded-full px-6 py-2 transition-colors focus:outline-none" data-mentor="Dr. Alan Turing">Connect</button>
                 </div>
                 <!-- Mentor 2 -->
                 <div class="bg-[#1a1d2d] rounded-2xl border border-slate-700/50 p-6 text-center hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(217,70,239,0.15)] transition-all duration-300">
@@ -216,7 +216,7 @@
                     </div>
                     <h3 class="text-white font-bold">Sarah Connor</h3>
                     <p class="text-purple-400 text-sm mb-4 font-medium">Data Scientist</p>
-                    <button class="text-xs font-semibold text-purple-400 hover:text-white hover:bg-purple-500/20 border border-purple-500/50 rounded-full px-5 py-2 transition-colors">Connect</button>
+                    <button class="connect-mentor-btn text-purple-400 hover:text-white border border-gray-600 rounded-full px-6 py-2 transition-colors focus:outline-none" data-mentor="Sarah Connor">Connect</button>
                 </div>
             </div>
         </div>
@@ -445,6 +445,34 @@
                 } catch(err) {
                     alert('Network error. Is the backend running?');
                 }
+            });
+
+            // --- Mentor Connection Logic ---
+            document.querySelectorAll('.connect-mentor-btn').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const btn = e.target;
+                    const mentorName = btn.getAttribute('data-mentor');
+                    
+                    try {
+                        const response = await fetch('/api/connect_mentor', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ mentor_name: mentorName })
+                        });
+                        
+                        if (response.ok) {
+                            // Update UI gracefully upon success
+                            btn.textContent = 'Request Sent ✓';
+                            btn.classList.remove('border-gray-600', 'text-cyan-400', 'text-purple-400', 'hover:text-white');
+                            btn.classList.add('border-green-500', 'text-green-500', 'cursor-not-allowed');
+                            btn.disabled = true;
+                        } else {
+                            alert('Failed to send connection request.');
+                        }
+                    } catch(err) {
+                        alert('Network error while connecting to mentor.');
+                    }
+                });
             });
         });
     </script>

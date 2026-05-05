@@ -137,6 +137,9 @@ class CourseCreate(BaseModel):
     title: str
     description: str
 
+class MentorConnectRequest(BaseModel):
+    mentor_name: str
+
 class QuestionCreate(BaseModel):
     topic: str
     question_text: str
@@ -565,6 +568,11 @@ def add_question(data: QuestionCreate, db: Session = Depends(get_db)):
     db.add(new_q)
     db.commit()
     return {"message": "Question added successfully to the master bank!"}
+
+@app.post("/api/connect_mentor")
+def connect_mentor(data: MentorConnectRequest):
+    print(f"Connection request logged for {data.mentor_name}")
+    return {"status": "success", "message": "Connected"}
 
 # --- Serve Static Frontend Files ---
 # Mount the directory containing your HTML/CSS/JS files so they can be accessed directly.
