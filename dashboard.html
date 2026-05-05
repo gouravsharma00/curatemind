@@ -247,7 +247,7 @@
                                 </div>
                                 <h3 class="font-bold text-xl mb-2 text-white transition-colors">${course.title}</h3>
                                 <p class="text-gray-400 text-sm mb-6 flex-grow">${course.description}</p>
-                                <button class="w-full py-2.5 rounded-lg text-sm font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition-colors">Start course</button>
+                                <a href="${course.title.includes('Python') ? 'lesson1.html' : '#'}" class="w-full block text-center py-2.5 rounded-lg text-sm font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition-colors">Start course</a>
                             </div>
                         </div>
                         `;
