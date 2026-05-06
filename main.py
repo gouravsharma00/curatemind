@@ -163,6 +163,21 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 # --- FastAPI App ---
+# --- 1. IMPORTS MUST GO FIRST ---
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+# (Keep any other imports you already have right here, like passlib or sqlite3)
+
+# --- 2. DEFINE THE APP SECOND ---
+app = FastAPI()
+
+# --- 3. ADD THE ROOT ROUTE THIRD ---
+@app.get("/")
+async def get_root_index():
+    return FileResponse("index.html")
+
+# --- 4. ALL OTHER ROUTES GO BELOW ---
+# Keep all your existing routes (like dashboard, login, etc.) down here!
 app = FastAPI()
 @app.get("/auth.html")
 async def get_auth_page():
